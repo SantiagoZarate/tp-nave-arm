@@ -72,10 +72,10 @@ cls:	.asciz "\x1b[H\x1b[2J"   //una manera de borrar la pantalla usando ansi esc
 lencls= .-cls
 
 posFila: .word 3
-posColumna: .word 24 
+posColumna: .word 24
 
 //----------------------------------------------------------
-.text             
+.text
 //----------------------------------------------------------
 @ FUNCIONES DE MOVIMIENTO
 //----------------------------------------------------------
@@ -175,7 +175,7 @@ abajo:
 imprimirstring:
 .fnstart
       mov r7, #4         // Salida por pantalla  
-      mov r0, #1         // Indicamos a SWI que sera una cadena           
+      mov r0, #1         // Indicamos a SWI que sera una cadena
       swi 0              // SWI, Software interrup
       bx lr              //salimos de la funcion
 .fnend
@@ -186,7 +186,7 @@ leerteclado:
 .fnstart 
 	mov r7, #3 	     /*syscall 3, el sistema escucha al teclado*/	
 	mov r0, #0 		
-	mov r2, #1          /*r2 se guarda la cantidad de caracteres*/ 
+	mov r2, #1          /*r2 se guarda la cantidad de caracteres*/
      ldr r1, =teclado    /*donde se guarda la cadena ingresada*/
 	swi 0
 	bx lr
@@ -196,9 +196,9 @@ leerteclado:
 
 leernombre:
 .fnstart 
-	mov r7, #3 	     /*syscall 3, el sistema escucha al teclado*/	
-	mov r0, #0 		
-	mov r2, #30         /*r2 se guarda la cantidad de caracteres*/ 
+	mov r7, #3 	     /*syscall 3, el sistema escucha al teclado*/
+	mov r0, #0
+	mov r2, #30         /*r2 se guarda la cantidad de caracteres*/
      ldr r4, =nombre    /*donde se guarda la cadena ingresada*/
 
      @ str r4, [r1]      @GUARDO EL NOMBRE EN LA VARIABLE
@@ -211,8 +211,8 @@ limpiarpantalla:
 .fnstart
       ldr r1, =cls
       ldr r2, =lencls
-      mov r7, #4         /*syscall 4, el sistema escucha al monitor*/	
-      mov r0, #1         // Indicamos a SWI que sera una cadena 
+      mov r7, #4         /*syscall 4, el sistema escucha al monitor*/
+      mov r0, #1         // Indicamos a SWI que sera una cadena
       swi #0
       bx lr //salimos de la funcion mifuncion
 .fnend
@@ -292,21 +292,21 @@ validartecla:
      ldrb r1,[r1]        @EN R1 GUARDO EL CONTENIDO DE LA DIRECCION DEL TECLADO
 
      cmp r1,#'a'	     @LETRA A
-     beq izquierda       
+     beq izquierda
 	cmp r1,#'A'
 	beq izquierda
 
-     cmp r1,#'s'	     @LETRA S 
+     cmp r1,#'s'	     @LETRA S
      beq abajo
 	cmp r1,#'S'
 	beq abajo
 
-     cmp r1,#'w'	     @LETRA W 
+     cmp r1,#'w'	     @LETRA W
      beq arriba
 	cmp r1,#'W'
 	beq arriba
 
-     cmp r1,#'d'	     @LETRA D 
+     cmp r1,#'d'	     @LETRA D
      beq derecha
 	cmp r1,#'D'
 	beq derecha
