@@ -56,6 +56,32 @@ inicio:
 
 largoinicio= .-inicio
 
+completado:
+.ascii "     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀             \n"
+.ascii "     ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⡀⠀⠀⠀⠀⠀         \n"
+.ascii "     ⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⠋⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀ ⠈⢻⣿⣿⡄⠀⠀⠀⠀         \n"
+.ascii "     ⠀⠀⠀⠀⠀⠀⠀⣸⣿⡏⠀⠀⠀⣠⣶⣾⣿⣿⣿⠿⠿⠿⢿⣿⣿⣿⣄⠀⠀⠀         \n"
+.ascii "     ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠁⠀⠀⢰⣿⣿⣯⠁⠀⠀⠀⠀⠀⠀⠀ ⠈⠙⢿⣷⡄          \n"
+.ascii "     ⠀⠀⣀⣤⣴⣶⣶⣿⡟⠀⠀⠀⢸⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⣿⣷          \n"
+.ascii "     ⠀⢰⣿⡟⠋⠉⣹⣿⡇⠀⠀⠀⠘⣿⣿⣿⣿⣷⣦⣤⣤⣤⣶⣶⣶⣶⣿⣿⣿         \n"
+.ascii "     ⠀⢸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃         \n"
+.ascii "     ⠀⣸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠉⠻⠿⣿⣿⣿⣿⡿⠿⠿⠛⢻⣿⡇           \n"
+.ascii "     ⠀⣿⣿⠁⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⢸⣿⣧            \n"
+.ascii "     ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⢸⣿⣿            \n"
+.ascii "     ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⢸⣿⣿            \n"
+.ascii "     ⠀⢿⣿⡆⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⢸⣿⡇            \n"
+.ascii "     ⠀⠸⣿⣧⡀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⣿⣿⠃           \n"
+.ascii "     ⠀⠀⠛⢿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⣰⣿⣿⣷⣶⣶⣶⣶⠶⢠⣿⣿⠀            \n"
+.ascii "     ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⣽⣿⡏⠁⠀⠀⢸⣿⡇             \n"
+.ascii "     ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⢹⣿⡆⠀⠀⠀⣸⣿⠇             \n"
+.ascii "     ⠀⠀⠀⠀⠀⠀⠀⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁⠀⠈⠻⣿⣿⣿⣿⡿⠏             \n"
+.ascii "     ⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁                          \n"
+.ascii "                                                    \n"
+.ascii "              JUEGO COMPLETADO!                     \n"
+.ascii "                                                    \n"
+
+largocompleado= .-completado
+
 @ VARIABLES
 
 nombre: .ascii " "
@@ -65,8 +91,8 @@ largonombre= .-nombre
 teclado: .ascii " "
 largoteclado= .-teclado
 
-msjchau: .ascii "chau"
-largomsjchau= .-msjchau
+mensajeover: .ascii "chau\n"
+largomensajeover= .-mensajeover
 
 cls:	.asciz "\x1b[H\x1b[2J"   //una manera de borrar la pantalla usando ansi escape codes
 lencls= .-cls
@@ -174,7 +200,7 @@ abajo:
 
 imprimirstring:
 .fnstart
-      mov r7, #4         // Salida por pantalla  
+      mov r7, #4         // Salida por pantalla
       mov r0, #1         // Indicamos a SWI que sera una cadena
       swi 0              // SWI, Software interrup
       bx lr              //salimos de la funcion
@@ -184,8 +210,8 @@ imprimirstring:
 
 leerteclado:
 .fnstart 
-	mov r7, #3 	     /*syscall 3, el sistema escucha al teclado*/	
-	mov r0, #0 		
+	mov r7, #3 	     /*syscall 3, el sistema escucha al teclado*/
+	mov r0, #0
 	mov r2, #1          /*r2 se guarda la cantidad de caracteres*/
      ldr r1, =teclado    /*donde se guarda la cadena ingresada*/
 	swi 0
@@ -195,7 +221,7 @@ leerteclado:
 //----------------------------------------------------------
 
 leernombre:
-.fnstart 
+.fnstart
 	mov r7, #3 	     /*syscall 3, el sistema escucha al teclado*/
 	mov r0, #0
 	mov r2, #30         /*r2 se guarda la cantidad de caracteres*/
@@ -263,6 +289,21 @@ actualizarespacio:
      strb r2, [r3]       /*escribimos el char en la coordenada */
      bx lr
 
+//----------------------------------------------------------
+
+juegocompletado:
+     push {lr}
+     bl limpiarpantalla
+
+     ldr r1, =completado
+     ldr r2, =largocompleado
+
+     bl imprimirstring
+
+     b end
+
+//----------------------------------------------------------
+
 .global main
 main:
      @LIMPIAR PANTALLA
@@ -288,7 +329,13 @@ main:
 @PONER CONDICIONES DE JUEGO
 
 validartecla:
-     bl leerteclado      
+     @VERIFICO SI EL JUGADOR LLEGO A LA SUPERFICIE
+     ldr r1, =posFila
+     ldr r1, [r1]
+     cmp r1, #19
+     beq juegocompletado
+
+     bl leerteclado
      ldrb r1,[r1]        @EN R1 GUARDO EL CONTENIDO DE LA DIRECCION DEL TECLADO
 
      cmp r1,#'a'	     @LETRA A
