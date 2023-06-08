@@ -1,5 +1,5 @@
 .data
-@PANTALLAS
+@PANTALLAS -------------------------------------------------
 planeta:
 .ascii "|------------------------------------------------|\n"
 .ascii "|       *** Intenta aterrizar en Argos ***       |\n"
@@ -56,7 +56,7 @@ inicio:
 
 largoinicio= .-inicio
 
-@ VARIABLES
+@ VARIABLES -------------------------------------------------
 
 nombre: .ascii " "
 largonombre= .-nombre

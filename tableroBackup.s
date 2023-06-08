@@ -117,7 +117,11 @@ izquierda:
      strb r2, [r0]
 
      bl limpiarpantalla
+     @VERIFICO SI COLISIONO CON ALGO
+     bl colision
+     
      bl actualizarmatriz
+
 
      ldr r1, =planeta
      ldr r2, =largoplaneta
@@ -140,7 +144,12 @@ derecha:
      strb r2, [r0]
 
      bl limpiarpantalla
+
+     @VERIFICO SI COLISIONO CON ALGO
+     bl colision
+
      bl actualizarmatriz
+
 
      ldr r1, =planeta
      ldr r2, =largoplaneta
@@ -163,6 +172,9 @@ arriba:
      strb r2, [r0]
 
      bl limpiarpantalla
+     @VERIFICO SI COLISIONO CON ALGO
+     bl colision
+
      bl actualizarmatriz
 
      ldr r1, =planeta
@@ -186,6 +198,10 @@ abajo:
      strb r2, [r0]
 
      bl limpiarpantalla
+
+     @VERIFICO SI COLISIONO CON ALGO
+     bl colision
+
      bl actualizarmatriz
 
      ldr r1, =planeta
@@ -196,6 +212,35 @@ abajo:
      bx lr
 .fnend
 
+//----------------------------------------------------------
+
+colision:
+     ldr r3, =planeta
+     ldr r0, =posFila
+     ldr r0, [r0]
+
+     ldr r1, =posColumna
+     ldr r1, [r1]
+
+     mov r4, #51
+
+     mul r2, r4, r0          @MULTIPLICO LA CANTIDAD DE COLUMNAS POR EL NUMERO DE FILA
+
+     add r3, r2              @SUMAMOS LA MULTIPLICACION
+     add r3, r1              @SUMAMOS LA COLUMNA A LA CANTIDAD ANTERIOR
+
+     ldrb r5, [r3]           @CARGO EN R5 SOLO UN BIT, EL PRIMERO QUE APUNTA R3
+     @COMPARACION
+     cmp r5, #'*'            
+     beq end
+
+     cmp r5, #'|'
+     beq end
+
+     @ cmp r5, #' '
+     @ bne end
+
+     bx lr
 //----------------------------------------------------------
 
 imprimirstring:
@@ -304,6 +349,19 @@ juegocompletado:
 
 //----------------------------------------------------------
 
+juegoterminado:
+     push {lr}
+     bl limpiarpantalla
+
+     ldr r1, =completado
+     ldr r2, =largocompleado
+
+     bl imprimirstring
+
+     b end
+
+//----------------------------------------------------------
+
 crearAsteroides:
 .fnstart
     ldr r1,=planeta    @cargo la direccion de planeta
@@ -351,12 +409,6 @@ main:
 @PONER CONDICIONES DE JUEGO
 
 validartecla:
-     @VERIFICO SI EL JUGADOR LLEGO A LA SUPERFICIE
-     ldr r1, =posFila
-     ldr r1, [r1]
-     cmp r1, #19
-     beq juegocompletado
-
      bl leerteclado
      ldrb r1,[r1]        @EN R1 GUARDO EL CONTENIDO DE LA DIRECCION DEL TECLADO
 
@@ -379,6 +431,18 @@ validartecla:
      beq derecha
 	cmp r1,#'D'
 	beq derecha
+
+     @VERIFICO SI EL JUGADOR LLEGO A LA SUPERFICIE
+     ldr r1, =posFila
+     ldr r1, [r1]
+     cmp r1, #19
+     beq juegocompletado
+
+     @VERIFICO SI EL JUGADOR LLEGO AL LIMITE SUPERIOR
+     ldr r1, =posFila
+     ldr r1, [r1]
+     cmp r1, #0
+     beq end
 
      b validartecla
 
