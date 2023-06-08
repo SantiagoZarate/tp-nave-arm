@@ -22,7 +22,7 @@ planeta:
 .ascii "|                                                |\n"
 .ascii "+------------------------------------------------+\n"
 .ascii "|                                                |\n"
-.ascii "|               superficie de Argos              |\n"
+.ascii "|               superficie de Argos              m\n"
 
 largoplaneta= .-planeta
 
@@ -110,6 +110,8 @@ largomensajeover= .-mensajeover
 cls:	.asciz "\x1b[H\x1b[2J"   //una manera de borrar la pantalla usando ansi escape codes
 lencls= .-cls
 
+vidas: .word 3
+
 posFila: .word 3
 posColumna: .word 24
 
@@ -134,7 +136,6 @@ izquierda:
      bl colision
      
      bl actualizarmatriz
-
 
      ldr r1, =planeta
      ldr r2, =largoplaneta
@@ -162,7 +163,6 @@ derecha:
      bl colision
 
      bl actualizarmatriz
-
 
      ldr r1, =planeta
      ldr r2, =largoplaneta
@@ -244,13 +244,21 @@ colision:
 
      ldrb r5, [r3]           @CARGO EN R5 SOLO UN BIT, EL PRIMERO QUE APUNTA R3
      @COMPARACION
-     cmp r5, #'*'            
-     beq juegoterminado
+     cmp r5, #'*'
+     beq restarvida
 
      cmp r5, #'|'
      beq juegoterminado
 
      bx lr
+//----------------------------------------------------------
+
+restarvida:
+     ldr r1, =vidas
+     ldr r3, [r1]
+     sub r2, r3, #1
+     str r2, [r1]
+
 //----------------------------------------------------------
 
 imprimirstring:
@@ -302,6 +310,7 @@ limpiarpantalla:
 
 actualizarmatriz:
      /* quiero  escribir una @ en (3,24)*/
+     push {lr}
      ldr r3, =planeta
 
      ldr r0, =posFila
@@ -319,6 +328,48 @@ actualizarmatriz:
 /*sumamos desplazamiento de la columna a la q queremos ir r1=2*/
      add r3,r1 	     /*r3= puntero a fila + coord. Columna*/
      strb r2, [r3]       /*escribimos el char en la coordenada */
+
+     bl moverasteroides 
+
+     pop {lr}
+     
+     bx lr
+
+//----------------------------------------------------------
+moverasteroides:
+     @RECORRER LA MATRIZ Y EN CASO DE ENCONTRAR UN ASTEROIDES RESTARLE
+     @POSICIONES DE MEMORIA
+     ldr r1, =planeta
+     mov r4, #' '
+     mov r5, #'*'
+     
+
+cicloasteroides:
+     ldrb r3, [r1]
+
+     @COMPARO PARA VER SI LLEGO A LA FINAL DE LA MATRIZ
+     cmp r3, #'m'
+     beq finciclo
+
+     @SUPLANTAR POR ESPACIO Y SUBIR FILA
+     cmp r3, #'*'
+     beq ponerespacio
+
+     add r1, #1
+
+     b cicloasteroides
+
+ponerespacio:
+     strb r4, [r1]       @REEMPLAZO EL LA COORDENA POR EL ESPACIO
+
+     @ ldrb r2, [r1]        @INTENTANDO DIBUJAR EL ASTEROIDE UNA FILA MAS ARRIBA
+     @ sub r2, #51
+
+     @ strb r5, [r2]
+
+     b cicloasteroides
+
+finciclo:
      bx lr
 
 //----------------------------------------------------------
@@ -442,6 +493,13 @@ validartecla:
 	cmp r1,#'D'
 	beq derecha
 
+verficacion:
+     @VERIFIOC SI QUEDAN VIDAS
+     ldr r1, =vidas
+     ldr r1, [r1]
+     cmp r1, #0
+     beq juegoterminado
+
      @VERIFICO SI EL JUGADOR LLEGO A LA SUPERFICIE
      ldr r1, =posFila
      ldr r1, [r1]
@@ -452,7 +510,7 @@ validartecla:
      ldr r1, =posFila
      ldr r1, [r1]
      cmp r1, #0
-     beq end
+     beq juegoterminado
 
      b validartecla
 
