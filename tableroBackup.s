@@ -2,7 +2,7 @@
 @PANTALLAS
 planeta:
 .ascii "|------------------------------------------------|\n"
-.ascii "|       *** Intenta aterrizar en Argos ***       |\n"
+.ascii "|           Intenta aterrizar en Argos           |\n"
 .ascii "|                                                |\n"
 .ascii "|                                                |\n"
 .ascii "|                                                |\n"
@@ -342,7 +342,6 @@ moverasteroides:
      ldr r1, =planeta
      mov r4, #' '
      mov r5, #'*'
-     
 
 cicloasteroides:
      ldrb r3, [r1]
@@ -353,19 +352,23 @@ cicloasteroides:
 
      @SUPLANTAR POR ESPACIO Y SUBIR FILA
      cmp r3, #'*'
-     beq ponerespacio
+     beq ponerespacioyavanzarasteroide
 
      add r1, #1
 
      b cicloasteroides
 
-ponerespacio:
-     strb r4, [r1]       @REEMPLAZO EL LA COORDENA POR EL ESPACIO
+ponerespacioyavanzarasteroide:
+     @BORRAR LOS ASTEROIDES UNA VEZ LLEGAN A LA 3ER FILA (POS 204)
+     @BLE Less Equal
 
-     @ ldrb r2, [r1]        @INTENTANDO DIBUJAR EL ASTEROIDE UNA FILA MAS ARRIBA
-     @ sub r2, #51
+     @REEMPLAZO EL LA COORDENA POR EL ESPACIO
+     strb r4, [r1]      
 
-     @ strb r5, [r2]
+     @INTENTANDO DIBUJAR EL ASTEROIDE UNA FILA MAS ARRIBA
+     sub r2, r1, #51
+
+     strb r5, [r2]
 
      b cicloasteroides
 
