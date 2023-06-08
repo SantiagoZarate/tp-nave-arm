@@ -27,34 +27,47 @@ planeta:
 largoplaneta= .-planeta
 
 inicio:
-
-.ascii "                                                                                                           \n"
-.ascii "                                                                                                           \n"
-.ascii "        ##                                                                                  /              \n"
-.ascii "     /####                                                                           #    #/               \n"
-.ascii "    /  ###                     #                                   #                ###   ##               \n"
-.ascii "       /##                    ##                                  ##                 #    ##               \n"
-.ascii "      /  ##                   ##                                  ##                      ##               \n"
-.ascii "      /  ##         /###    ##########  /###    /###     /###   ######## ##  /###  ###    ##  /##     /##  \n"
-.ascii "     /    ##       / ####  ######## ###/ ####/ / ###  / / #### ########  ###/ ####/ ###   ## / ###   / ### \n"
-.ascii "     /    ##      ##  ###/    ##     ##   ### /   ###/ ##  ###/   ##      ##   ###   ##   ##/   /   /   ###\n"
-.ascii "    /      ##    ####         ##     ##      ##    ## ####        ##      ##         ##   ##   /   ##    ##\n"
-.ascii "    /########      ###        ##     ##      ##    ##   ###       ##      ##         ##   ##  /    ########\n"
-.ascii "   /        ##       ###      ##     ##      ##    ##     ###     ##      ##         ##   ## ##    ####### \n"
-.ascii "   #        ##         ###    ##     ##      ##    ##       ###   ##      ##         ##   ######   ##      \n"
-.ascii "  /####      ##   /###  ##    ##     ##      ##    ##  /###  ##   ##      ##         ##   ##  ###  ####    \n"
-.ascii " /   ####    ##  / #### /     ##     ###      ######  / #### /    ##      ###        ###  ##   ###  ######/\n"
-.ascii "/     ##      #/    ###/       ##     ###      ####      ###/      ##      ###        ##/  ##   ##/  ##### \n"
-.ascii "                                                                                                           \n"
-.ascii "                                          BIEVENIDO A ASTROSTRI                                            \n"
-.ascii "                                       PARA CNTINUAR INGRESA TUOMBRE                                       \n"
-.ascii "                                                                                                           \n"
-.ascii "               -PARA MOVERTE USA 'ASWD'                               -EL OBJETIVO ES ATERRIZAR            \n"
-.ascii "                                                                                                           \n"
-.ascii "               -!NO TOQUES LOS BORDES!                                -ALGO MAS                            \n"
-.ascii "                                                                                                           \n"
+.ascii "                                                                                                        \n"
+.ascii "                                                                                                        \n"
+.ascii "                     .d88888b.  .d8888b.    .d8888b. 888                          888      d8b          \n"
+.ascii "                    d88P" "Y88bd88P  Y88b  d88P  Y88b888                          888      Y8P          \n"
+.ascii "                    888     888888    888  Y88b.     888                          888                   \n"
+.ascii "      +  /\         888     888888           Y888b.  888888 8888b. 888d888.d8888b 88888b.  888 88888b.  \n"
+.ascii "       .    .   *   888     888888              Y88b.888        88b888P   88K     888  88b 888 888  88b \n"
+.ascii "  *   /======\      888     888888    888         888888   .d888888888     Y8888b.888  888 888 888  888 \n"
+.ascii "     ;:.      ;     Y88b. .d88PY88b  d88P  Y88b  d88PY88b. 888  888888         X88888  888 888 888 d88P \n"
+.ascii "     |:. (_)  |       Y88888P    Y8888P      Y8888P    Y888 Y888888888     88888P'888  888 888 88888P   \n"
+.ascii "     ;:.  _   ;                                                                                888      \n"
+.ascii "     |:. (_)  |                                                                                888      \n"
+.ascii "     |:.  _   |                                   BIENVENIDO A OC STARSHIP                     888      \n"
+.ascii "     |:. (_)  |                               PARA CONTINUAR INGRESA TU NOMBRE                          \n"
+.ascii "     ;:.      ;                                                                                         \n"
+.ascii "   .' \:.    /  .                                                                                       \n"
+.ascii "  / .-'':._.' -. \                                                                                      \n"
+.ascii "_..--          --.._                                                                                    \n"
+.ascii "                                                                                                        \n"
 
 largoinicio= .-inicio
+
+gameover:
+.ascii "                                                         ##                                \n"
+.ascii "                                                         ##                                \n"
+.ascii "    /###      /###   ### /### /###     /##         /###   ##    ###      /##  ###  /###    \n"
+.ascii "   /  ###  / / ###  / ##/ ###/ /##  / / ###       / ###  / ##    ###    / ###  ###/ #### / \n"
+.ascii "  /    ###/ /   ###/   ##  ###/ ###/ /   ###     /   ###/  ##     ###  /   ###  ##   ###/  \n"
+.ascii " ##     ## ##    ##    ##   ##   ## ##    ###   ##    ##   ##      ## ##    ### ##         \n"
+.ascii " ##     ## ##    ##    ##   ##   ## ########    ##    ##   ##      ## ########  ##         \n"
+.ascii " ##     ## ##    ##    ##   ##   ## #######     ##    ##   ##      ## #######   ##         \n"
+.ascii " ##     ## ##    ##    ##   ##   ## ##          ##    ##   ##      ## ##        ##         \n"
+.ascii " ##     ## ##    /#    ##   ##   ## ####    /   ##    ##   ##      /  ####    / ##         \n"
+.ascii "  ########  ####/ ##   ###  ###  ### ######/     ######     ######/    ######/  ###        \n"
+.ascii "    ### ###  ###   ##   ###  ###  ### #####       ####       #####      #####    ###       \n"
+.ascii "         ###                                                                               \n"
+.ascii "   ####   ###                                                                              \n"
+.ascii " /######  /#                                                                               \n"
+.ascii "/     ###/                                                                                 \n"
+
+largogameover= .-gameover
 
 completado:
 .ascii "     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀             \n"
@@ -232,13 +245,10 @@ colision:
      ldrb r5, [r3]           @CARGO EN R5 SOLO UN BIT, EL PRIMERO QUE APUNTA R3
      @COMPARACION
      cmp r5, #'*'            
-     beq end
+     beq juegoterminado
 
      cmp r5, #'|'
-     beq end
-
-     @ cmp r5, #' '
-     @ bne end
+     beq juegoterminado
 
      bx lr
 //----------------------------------------------------------
@@ -353,8 +363,8 @@ juegoterminado:
      push {lr}
      bl limpiarpantalla
 
-     ldr r1, =completado
-     ldr r2, =largocompleado
+     ldr r1, =gameover
+     ldr r2, =largogameover
 
      bl imprimirstring
 
