@@ -132,6 +132,8 @@ izquierda:
 .fnstart
      push {lr}
      bl actualizarespacio
+     bl moverasteroides
+     bl colision
 
      ldr r0, =posColumna
      ldr r2, [r0]
@@ -140,7 +142,6 @@ izquierda:
 
      bl limpiarpantalla
      @VERIFICO SI COLISIONO CON ALGO
-     bl colision
 
      bl actualizarmatriz
 
@@ -158,6 +159,8 @@ derecha:
 .fnstart
      push {lr}
      bl actualizarespacio
+     bl moverasteroides
+     bl colision
 
      ldr r0, =posColumna
      ldr r2, [r0]
@@ -167,7 +170,6 @@ derecha:
      bl limpiarpantalla
 
      @VERIFICO SI COLISIONO CON ALGO
-     bl colision
 
      bl actualizarmatriz
 
@@ -185,6 +187,8 @@ arriba:
 .fnstart
      push {lr}
      bl actualizarespacio
+     bl moverasteroides
+     bl colision
 
      ldr r0, =posFila
      ldr r2, [r0]
@@ -193,7 +197,6 @@ arriba:
 
      bl limpiarpantalla
      @VERIFICO SI COLISIONO CON ALGO
-     bl colision
 
      bl actualizarmatriz
 
@@ -210,6 +213,11 @@ arriba:
 abajo:
 .fnstart
      push {lr}
+     bl colisionabajo
+
+     bl moverasteroides
+     bl colision         @ESTA COLISION ES PARA LOS BORDES
+
      bl actualizarespacio
 
      ldr r0, =posFila
@@ -220,7 +228,6 @@ abajo:
      bl limpiarpantalla
 
      @VERIFICO SI COLISIONO CON ALGO
-     bl colision
 
      bl actualizarmatriz
 
@@ -233,8 +240,37 @@ abajo:
 .fnend
 
 //----------------------------------------------------------
+colisionabajo:
+     push {lr}
+     ldr r3, =planeta
+     mov r4, #'*'
+
+     ldr r0, =posFila
+     ldr r0, [r0]
+
+     ldr r1, =posColumna
+     ldr r1, [r1]
+
+     @CALCULAMOS EL INDICE DE LA FILA
+     mov r4, #51         /*cantidad de elementos por fila*/
+     mul r5, r4, r0      /*r5= nro de fila * cantidad de elementos*/
+/*calculamos el puntero desde el matriz[0,0]*/
+     add r3,r5           /*r3= puntero a la fila de inicio de mi matriz*/
+/*sumamos desplazamiento de la columna a la q queremos ir r1=2*/
+     add r3,r1       /*r3= puntero a fila + coord. Columna*/
+
+     add r3,#51          @SE LE SUMAN PARA VER LA FILA DE ABAJO
+     
+     cmp r3, r4
+     bleq restarvida
+
+     pop {lr}
+
+     bx lr
+
 
 colision:
+     push {lr}
      ldr r3, =planeta
      ldr r0, =posFila
      ldr r0, [r0]
@@ -252,76 +288,25 @@ colision:
      ldrb r5, [r3]           @CARGO EN R5 SOLO UN BIT, EL PRIMERO QUE APUNTA R3
      @COMPARACION
      cmp r5, #'*'
-     beq restarvida
+     bleq restarvida
 
      cmp r5, #'|'
      beq juegoterminado
 
+     pop {lr}
      bx lr
-
-//----------------------------------------------------------
-
-restarvida:
-     ldr r1, =vidas
-     ldr r3, [r1]
-     sub r2, r3, #1
-     str r2, [r1]
-
-//----------------------------------------------------------
-
-imprimirstring:
-.fnstart
-      mov r7, #4         // Salida por pantalla
-      mov r0, #1         // Indicamos a SWI que sera una cadena
-      swi 0              // SWI, Software interrup
-      bx lr              //salimos de la funcion
-.fnend
-
-//----------------------------------------------------------
-
-leerteclado:
-.fnstart
-        mov r7, #3           /*syscall 3, el sistema escucha al teclado*/
-        mov r0, #0
-        mov r2, #1          /*r2 se guarda la cantidad de caracteres*/
-     ldr r1, =teclado    /*donde se guarda la cadena ingresada*/
-        swi 0
-        bx lr
-.fnend
-
-//----------------------------------------------------------
-
-leernombre:
-.fnstart
-        mov r7, #3           /*syscall 3, el sistema escucha al teclado*/
-        mov r0, #0
-        mov r2, #30         /*r2 se guarda la cantidad de caracteres*/
-     ldr r4, =nombre    /*donde se guarda la cadena ingresada*/
-
-     @ str r4, [r1]      @GUARDO EL NOMBRE EN LA VARIABLE
-        swi 0
-        bx lr
-.fnend
-
-//----------------------------------------------------------
-limpiarpantalla:
-.fnstart
-      ldr r1, =cls
-      ldr r2, =lencls
-      mov r7, #4         /*syscall 4, el sistema escucha al monitor*/
-      mov r0, #1         // Indicamos a SWI que sera una cadena
-      swi #0
-      bx lr //salimos de la funcion mifuncion
-.fnend
 
 //----------------------------------------------------------
 
 actualizarmatriz:
      /* quiero  escribir una @ en (3,24)*/
      push {lr}
-     ldr r3, =planeta
 
-     add r8, #1
+     ldr r3, =planeta
+     mov r4, #'*'
+     mov r6, #'|'
+
+     add r8, #1          @SUMO UNO A LA CANTIDAD DE MOVIMIENTOS
 
      ldr r0, =posFila
      ldr r0, [r0]
@@ -337,14 +322,12 @@ actualizarmatriz:
      add r3,r5           /*r3= puntero a la fila de inicio de mi matriz*/
 /*sumamos desplazamiento de la columna a la q queremos ir r1=2*/
      add r3,r1       /*r3= puntero a fila + coord. Columna*/
+     
      strb r2, [r3]       /*escribimos el char en la coordenada */
-
-     bl moverasteroides
 
      pop {lr}
 
      bx lr
-
 
 //----------------------------------------------------------
 moverasteroides:
@@ -424,6 +407,63 @@ actualizarespacio:
      add r3,r1       /*r3= puntero a fila + coord. Columna*/
      strb r2, [r3]       /*escribimos el char en la coordenada */
      bx lr
+
+//----------------------------------------------------------
+
+restarvida:
+     ldr r1, =vidas
+     ldr r3, [r1]
+     sub r2, r3, #1
+     str r2, [r1]
+     bx lr
+
+//----------------------------------------------------------
+
+imprimirstring:
+.fnstart
+      mov r7, #4         // Salida por pantalla
+      mov r0, #1         // Indicamos a SWI que sera una cadena
+      swi 0              // SWI, Software interrup
+      bx lr              //salimos de la funcion
+.fnend
+
+//----------------------------------------------------------
+
+leerteclado:
+.fnstart
+        mov r7, #3           /*syscall 3, el sistema escucha al teclado*/
+        mov r0, #0
+        mov r2, #1          /*r2 se guarda la cantidad de caracteres*/
+     ldr r1, =teclado    /*donde se guarda la cadena ingresada*/
+        swi 0
+        bx lr
+.fnend
+
+//----------------------------------------------------------
+
+leernombre:
+.fnstart
+        mov r7, #3           /*syscall 3, el sistema escucha al teclado*/
+        mov r0, #0
+        mov r2, #30         /*r2 se guarda la cantidad de caracteres*/
+     ldr r4, =nombre    /*donde se guarda la cadena ingresada*/
+
+     @ str r4, [r1]      @GUARDO EL NOMBRE EN LA VARIABLE
+        swi 0
+        bx lr
+.fnend
+
+//----------------------------------------------------------
+limpiarpantalla:
+.fnstart
+      ldr r1, =cls
+      ldr r2, =lencls
+      mov r7, #4         /*syscall 4, el sistema escucha al monitor*/
+      mov r0, #1         // Indicamos a SWI que sera una cadena
+      swi #0
+      bx lr //salimos de la funcion mifuncion
+.fnend
+
 
 //----------------------------------------------------------
 
@@ -527,25 +567,28 @@ validartecla:
 
      cmp r1,#'a'             @LETRA A
      beq izquierda
-        cmp r1,#'A'
-        beq izquierda
+     cmp r1,#'A'
+     beq izquierda
 
      cmp r1,#'s'             @LETRA S
      beq abajo
-        cmp r1,#'S'
-        beq abajo
+     cmp r1,#'S'
+     beq abajo
 
      cmp r1,#'w'             @LETRA W
      beq arriba
-        cmp r1,#'W'
-        beq arriba
+     cmp r1,#'W'
+     beq arriba
 
      cmp r1,#'d'             @LETRA D
      beq derecha
-        cmp r1,#'D'
-        beq derecha
+     cmp r1,#'D'
+     beq derecha
 
 verficacion:
+     @ Verifico la colision
+     @ bl colision
+
      @VERIFIOC SI QUEDAN VIDAS
      ldr r1, =vidas
      ldr r1, [r1]
