@@ -1,7 +1,7 @@
 .data
 @PANTALLAS
 planeta:
-.ascii "|------------------------------------------------|\n"
+.ascii "|-vidas: ----------------------------------------|\n"
 .ascii "|           Intenta aterrizar en Argos           |\n"
 .ascii "|                                                |\n"
 .ascii "|                                                |\n"
@@ -25,6 +25,10 @@ planeta:
 .ascii "|               superficie de Argos              m\n"
 
 largoplaneta= .-planeta
+
+asteroide1: .ascii "| *   *   *   *   *   *   *   *   *   *   *   *  |\n"
+asteroide2: .ascii "|  **  **  **  **  **  **  **  **  **  **  **  **|\n"
+asteroide3: .ascii "|* * * *  *  **  *  * *  *  * **  * **  * *   * *|\n"
 
 inicio:
 .ascii "                                                                                                        \n"
@@ -107,11 +111,14 @@ largoteclado= .-teclado
 mensajeover: .ascii "chau\n"
 largomensajeover= .-mensajeover
 
-cls:	.asciz "\x1b[H\x1b[2J"   //una manera de borrar la pantalla usando ansi escape codes
+cls:.asciz "\x1b[H\x1b[2J"   //una manera de borrar la pantalla usando ansi escape codes
 lencls= .-cls
 
+@LAS VARIABLES DE VIDAS SON DISTINTAS YA QUE UNA QUE TIENE QUE SER DIBUJADA, LA OTRA ES UNA CONDICION
+vidaspantalla: .asciz "3"
 vidas: .word 3
 
+@Posicion inicial de la nave
 posFila: .word 3
 posColumna: .word 24
 
@@ -134,7 +141,7 @@ izquierda:
      bl limpiarpantalla
      @VERIFICO SI COLISIONO CON ALGO
      bl colision
-     
+
      bl actualizarmatriz
 
      ldr r1, =planeta
@@ -251,6 +258,7 @@ colision:
      beq juegoterminado
 
      bx lr
+
 //----------------------------------------------------------
 
 restarvida:
@@ -272,27 +280,27 @@ imprimirstring:
 //----------------------------------------------------------
 
 leerteclado:
-.fnstart 
-	mov r7, #3 	     /*syscall 3, el sistema escucha al teclado*/
-	mov r0, #0
-	mov r2, #1          /*r2 se guarda la cantidad de caracteres*/
+.fnstart
+        mov r7, #3           /*syscall 3, el sistema escucha al teclado*/
+        mov r0, #0
+        mov r2, #1          /*r2 se guarda la cantidad de caracteres*/
      ldr r1, =teclado    /*donde se guarda la cadena ingresada*/
-	swi 0
-	bx lr
+        swi 0
+        bx lr
 .fnend
 
 //----------------------------------------------------------
 
 leernombre:
 .fnstart
-	mov r7, #3 	     /*syscall 3, el sistema escucha al teclado*/
-	mov r0, #0
-	mov r2, #30         /*r2 se guarda la cantidad de caracteres*/
+        mov r7, #3           /*syscall 3, el sistema escucha al teclado*/
+        mov r0, #0
+        mov r2, #30         /*r2 se guarda la cantidad de caracteres*/
      ldr r4, =nombre    /*donde se guarda la cadena ingresada*/
 
      @ str r4, [r1]      @GUARDO EL NOMBRE EN LA VARIABLE
-	swi 0
-	bx lr
+        swi 0
+        bx lr
 .fnend
 
 //----------------------------------------------------------
@@ -313,6 +321,8 @@ actualizarmatriz:
      push {lr}
      ldr r3, =planeta
 
+     add r8, #1
+
      ldr r0, =posFila
      ldr r0, [r0]
 
@@ -326,14 +336,15 @@ actualizarmatriz:
 /*calculamos el puntero desde el matriz[0,0]*/
      add r3,r5           /*r3= puntero a la fila de inicio de mi matriz*/
 /*sumamos desplazamiento de la columna a la q queremos ir r1=2*/
-     add r3,r1 	     /*r3= puntero a fila + coord. Columna*/
+     add r3,r1       /*r3= puntero a fila + coord. Columna*/
      strb r2, [r3]       /*escribimos el char en la coordenada */
 
-     bl moverasteroides 
+     bl moverasteroides
 
      pop {lr}
-     
+
      bx lr
+
 
 //----------------------------------------------------------
 moverasteroides:
@@ -343,8 +354,14 @@ moverasteroides:
      mov r4, #' '
      mov r5, #'*'
 
+     add r0, r1, #9           @UBICACION DE DONDE SE VA A DIBUJAR LAS VIDAS
+     ldr r6, =vidaspantalla   @CARGO LAS VIDAS EN UN VARIABLE
+     ldrb r6, [r6]            
 cicloasteroides:
      ldrb r3, [r1]
+
+     cmp r1, r0               @SI EL ITERADOR LLEGA A LA POSICION DIBUJO LA VIDA
+     streqb r6, [r1]
 
      @COMPARO PARA VER SI LLEGO A LA FINAL DE LA MATRIZ
      cmp r3, #'m'
@@ -354,16 +371,23 @@ cicloasteroides:
      cmp r3, #'*'
      beq ponerespacioyavanzarasteroide
 
+     @ cmp r3, #':'
+     @ beq dibujarvida
+
      add r1, #1
 
      b cicloasteroides
 
 ponerespacioyavanzarasteroide:
      @BORRAR LOS ASTEROIDES UNA VEZ LLEGAN A LA 3ER FILA (POS 204)
-     @BLE Less Equal
 
      @REEMPLAZO EL LA COORDENA POR EL ESPACIO
-     strb r4, [r1]      
+     strb r4, [r1]
+     ldr r2,=planeta
+     add r2,r2,#153
+
+     cmp r1,r2
+     ble cicloasteroides
 
      @INTENTANDO DIBUJAR EL ASTEROIDE UNA FILA MAS ARRIBA
      sub r2, r1, #51
@@ -371,6 +395,9 @@ ponerespacioyavanzarasteroide:
      strb r5, [r2]
 
      b cicloasteroides
+
+    dibujarvida:
+        b cicloasteroides
 
 finciclo:
      bx lr
@@ -394,7 +421,7 @@ actualizarespacio:
 /*calculamos el puntero desde el matriz[0,0]*/
      add r3,r5           /*r3= puntero a la fila de inicio de mi matriz*/
 /*sumamos desplazamiento de la columna a la q queremos ir r1=2*/
-     add r3,r1 	     /*r3= puntero a fila + coord. Columna*/
+     add r3,r1       /*r3= puntero a fila + coord. Columna*/
      strb r2, [r3]       /*escribimos el char en la coordenada */
      bx lr
 
@@ -428,25 +455,44 @@ juegoterminado:
 
 crearAsteroides:
 .fnstart
-    ldr r1,=planeta    @cargo la direccion de planeta
-    add r1,#2          @le sumo 2 para que no me quede sobre el borde
-    mov r2,#'*'        @cargo en r2 el *
+    ldr r1,=planeta    @cargo la direccion de plan
+
+    add r9, #1
+    cmp r9,#1           @Comparamos el r9 que indica que tipo de matriz de asteroide se debe imprimir
+    ldreq r2,=asteroide1
+    cmp r9,#2
+    ldreq r2,=asteroide2
+    cmp r9,#3
+    ldreq r2,=asteroide3
+
     mov r0,#0          @contador para verificar si se salio de la fila
     mov r3,#51         @cargo cantidad de elementos por fila
     mov r4,#18         @cargo fila en la que me quiero parar
-    mul r5,r3,r4       @multiplico fila por leementos
+    mul r5,r3,r4       @multiplico fila por elementos
     add r1,r5          @se lo sumo r1, para que quede parado en esa fila
 ciclo:
-    strb r2,[r1] @le cargo un asteroide a la posicion
-    add r1,#4  @sumo 4 posiciones a la fila
-    add r0,#4  @sumo 4 posiciones al contador
-    cmp r0,#45 @si el contador es mayor al inmediato sale
-    ble ciclo  @sino vuelve a hacer el ciclo
+    ldr r6,[r2], #1
+    strb r6,[r1]        @le cargo un asteroide a la posicion
+    add r1,#1           @sumo 1 posiciones a la fila
+    add r0,#1           @sumo 1 posiciones al contador
+    cmp r0,#51          @si el contador es mayor al inmediato sale
+    ble ciclo           @sino vuelve a hacer el ciclo
+
+    cmp r8, #5          @Una vez los movimientos llegan a 5 se resetean
+    moveq r8, #0        @RESETEO DE CONTADOR
+
+    cmp r9, #3          @Una vez r9 llega a 3 se resetea
+    moveq r9, #0
 
     bx lr
+.fnend
 
 .global main
 main:
+     mov r8, #0          @contador movmientos               (SE RESETEA EN 5)
+     mov r9, #0          @ESPACIO DE CREACION DE ASTEROIDES (SE RESETEA EN 3)
+     mov r10, #3         @CANTIDAD DE VIDAS
+
      @LIMPIAR PANTALLA
      bl limpiarpantalla
 
@@ -473,28 +519,31 @@ main:
 @PONER CONDICIONES DE JUEGO
 
 validartecla:
+     cmp r8, #5
+     beq crearAsteroides
+
      bl leerteclado
      ldrb r1,[r1]        @EN R1 GUARDO EL CONTENIDO DE LA DIRECCION DEL TECLADO
 
-     cmp r1,#'a'	     @LETRA A
+     cmp r1,#'a'             @LETRA A
      beq izquierda
-	cmp r1,#'A'
-	beq izquierda
+        cmp r1,#'A'
+        beq izquierda
 
-     cmp r1,#'s'	     @LETRA S
+     cmp r1,#'s'             @LETRA S
      beq abajo
-	cmp r1,#'S'
-	beq abajo
+        cmp r1,#'S'
+        beq abajo
 
-     cmp r1,#'w'	     @LETRA W
+     cmp r1,#'w'             @LETRA W
      beq arriba
-	cmp r1,#'W'
-	beq arriba
+        cmp r1,#'W'
+        beq arriba
 
-     cmp r1,#'d'	     @LETRA D
+     cmp r1,#'d'             @LETRA D
      beq derecha
-	cmp r1,#'D'
-	beq derecha
+        cmp r1,#'D'
+        beq derecha
 
 verficacion:
      @VERIFIOC SI QUEDAN VIDAS
@@ -520,11 +569,3 @@ verficacion:
 end:
     mov r7, #1    // Salida al sistema
     swi 0
-
-@ SI TENGO UN .WORD , A LA HORA DE GUARDA EL REGISTRO SE USAR ldr
-@ Y PARA RECORRER LA VARIBALE, A LA HORA DE AUMENTAR LE SUMO 4
-
-@ SI TENGO UN ASCIZ, A LA HORA DE GUARDAR EN EL REGISTRO SE USA ldrb
-@ Y PARA RECORRER LA VARIBALE, A LA HORA DE AUMENTAR LE SUMO 1
-
-@EL FORMATO .ASCIZ TERMINA CON UN 0.
