@@ -1,7 +1,7 @@
 .data
 @PANTALLAS
 planeta:
-.ascii "|-vidas: ----------------------------------------|\n"
+.ascii "|------------------------------------------------|\n"
 .ascii "|           Intenta aterrizar en Argos           |\n"
 .ascii "|                                                |\n"
 .ascii "|                                                |\n"
@@ -21,14 +21,39 @@ planeta:
 .ascii "|                                                |\n"
 .ascii "|                                                |\n"
 .ascii "+------------------------------------------------+\n"
-.ascii "|                                                |\n"
+.ascii "|    vidas:                                      |\n"
 .ascii "|               superficie de Argos              m\n"
-
 largoplaneta= .-planeta
 
-asteroide1: .ascii "| *   *   *   *   *   *   *   *   *   *   *   *  |\n"
-asteroide2: .ascii "|  **  **  **  **  **  **  **  **  **  **  **  **|\n"
-asteroide3: .ascii "|* * * *  *  **  *  * *  *  * **  * **  * *   * *|\n"
+planeta2:
+.ascii "|------------------------------------------------|\n"
+.ascii "|           Intenta aterrizar en Argos           |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "|                                                |\n"
+.ascii "+------------------------------------------------+\n"
+.ascii "|    vidas:                                      |\n"
+.ascii "|               superficie de Argos              m\n"
+
+largoplaneta2= .-planeta2
+
+asteroide1: .ascii "| *   *   *   *   $   *   *   *   *   *   *   *  |\n"
+asteroide2: .ascii "|  **  **  **  **  **  **  $*  **  **  **  **  **|\n"
+asteroide3: .ascii "|* * * $  *  **  *  * *  *  * **  * **  * *   * *|\n"
 
 inicio:
 .ascii "                                                                                                        \n"
@@ -68,8 +93,8 @@ gameover:
 .ascii "    ### ###  ###   ##   ###  ###  ### #####       ####       #####      #####    ###       \n"
 .ascii "         ###                                                                               \n"
 .ascii "   ####   ###                                                                              \n"
-.ascii " /######  /#                                                                               \n"
-.ascii "/     ###/                                                                                 \n"
+.ascii " /######  /#         presione y para volvera jugar                                         \n"
+.ascii "/     ###/           presione q para salir                                                 \n"
 
 largogameover= .-gameover
 
@@ -84,18 +109,18 @@ completado:
 .ascii "     ⠀⢸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃         \n"
 .ascii "     ⠀⣸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠉⠻⠿⣿⣿⣿⣿⡿⠿⠿⠛⢻⣿⡇           \n"
 .ascii "     ⠀⣿⣿⠁⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⢸⣿⣧            \n"
-.ascii "     ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⢸⣿⣿            \n"
-.ascii "     ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿            \n"
-.ascii "     ⠀⢿⣿⡆⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⢸⣿⡇            \n"
-.ascii "     ⠀⠸⣿⣧⡀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠃           \n"
+.ascii "     ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⢸⣿⣿             \n"
+.ascii "     ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿             \n"
+.ascii "     ⠀⢿⣿⡆⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⢸⣿⡇             \n"
+.ascii "     ⠀⠸⣿⣧⡀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠃             \n"
 .ascii "     ⠀⠀⠛⢿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⣰⣿⣿⣷⣶⣶⣶⣶⠶⢠⣿⣿⠀            \n"
 .ascii "     ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⣽⣿⡏⠁⠀⠀⢸⣿⡇             \n"
 .ascii "     ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⢹⣿⡆⠀⠀⠀⣸⣿⠇             \n"
 .ascii "     ⠀⠀⠀⠀⠀⠀⠀⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁⠀⠈⠻⣿⣿⣿⣿⡿⠏             \n"
 .ascii "     ⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁                          \n"
-.ascii "                                                    \n"
 .ascii "              JUEGO COMPLETADO!                     \n"
-.ascii "                                                    \n"
+.ascii "        presione y para volver a jugar              \n"
+.ascii "        presione q para volver a jugar              \n"
 
 largocompleado= .-completado
 
@@ -132,15 +157,16 @@ izquierda:
 .fnstart
      push {lr}
      bl actualizarespacio
+     bl moverasteroides
 
      ldr r0, =posColumna
      ldr r2, [r0]
      sub r2, r2, #1
      strb r2, [r0]
+     bl colision
 
      bl limpiarpantalla
      @VERIFICO SI COLISIONO CON ALGO
-     bl colision
 
      bl actualizarmatriz
 
@@ -158,16 +184,17 @@ derecha:
 .fnstart
      push {lr}
      bl actualizarespacio
+     bl moverasteroides
 
      ldr r0, =posColumna
      ldr r2, [r0]
      add r2, r2, #1
      strb r2, [r0]
+     bl colision
 
      bl limpiarpantalla
 
      @VERIFICO SI COLISIONO CON ALGO
-     bl colision
 
      bl actualizarmatriz
 
@@ -185,15 +212,16 @@ arriba:
 .fnstart
      push {lr}
      bl actualizarespacio
+     bl moverasteroides
 
      ldr r0, =posFila
      ldr r2, [r0]
      sub r2, r2, #1
      strb r2, [r0]
+     bl colision
 
      bl limpiarpantalla
      @VERIFICO SI COLISIONO CON ALGO
-     bl colision
 
      bl actualizarmatriz
 
@@ -206,10 +234,11 @@ arriba:
 .fnend
 
 //----------------------------------------------------------
-
 abajo:
 .fnstart
      push {lr}
+     bl colisionabajo
+     bl moverasteroides
      bl actualizarespacio
 
      ldr r0, =posFila
@@ -217,10 +246,11 @@ abajo:
      add r2, r2, #1
      strb r2, [r0]
 
+     bl colision
+
      bl limpiarpantalla
 
      @VERIFICO SI COLISIONO CON ALGO
-     bl colision
 
      bl actualizarmatriz
 
@@ -233,8 +263,42 @@ abajo:
 .fnend
 
 //----------------------------------------------------------
+colisionabajo:
+.fnstart
+      push {lr}
+     ldr r3, =planeta
+     ldr r0, =posFila
+     ldr r0, [r0]
+
+     ldr r1, =posColumna
+     ldr r1, [r1]
+
+     mov r4, #51
+
+     mul r2, r4, r0          @MULTIPLICO LA CANTIDAD DE COLUMNAS POR EL NUMERO DE FILA
+
+     add r3, r2              @SUMAMOS LA MULTIPLICACION
+     add r3, r1
+     add r3,#51            @SUMAMOS LA COLUMNA A LA CANTIDAD ANTERIOR
+
+     ldrb r5, [r3]           @CARGO EN R5 SOLO UN BIT, EL PRIMERO QUE APUNTA R3
+
+     cmp r5, #'*'
+     bleq restarvida
+
+     cmp r5,#'$'
+     bleq sumarvida
+
+     cmp r5, #'|'
+     beq juegoterminado
+
+     pop {lr}
+     bx lr
+.fnend
 
 colision:
+.fnstart
+     push {lr}
      ldr r3, =planeta
      ldr r0, =posFila
      ldr r0, [r0]
@@ -252,23 +316,178 @@ colision:
      ldrb r5, [r3]           @CARGO EN R5 SOLO UN BIT, EL PRIMERO QUE APUNTA R3
      @COMPARACION
      cmp r5, #'*'
-     beq restarvida
+     bleq restarvida
+
+     cmp r5,#'$'
+     bleq sumarvida
 
      cmp r5, #'|'
      beq juegoterminado
 
+     pop {lr}
      bx lr
+     .fnend
+
+//----------------------------------------------------------
+actualizarmatriz:
+.fnstart
+     ldr r3, =planeta
+     add r8, #1          @SUMO UNO A LA CANTIDAD DE MOVIMIENTOS
+
+     ldr r0, =posFila
+     ldr r0, [r0]
+
+     ldr r1, =posColumna
+     ldr r1, [r1]
+
+     mov r2,#'@'
+     @CALCULAMOS EL INDICE DE LA FILA
+     mov r4, #51         /*cantidad de elementos por fila*/
+     mul r5, r4, r0      /*r5= nro de fila * cantidad de elementos*/
+/*calculamos el puntero desde el matriz[0,0]*/
+     add r3,r5           /*r3= puntero a la fila de inicio de mi matriz*/
+/*sumamos desplazamiento de la columna a la q queremos ir r1=2*/
+     add r3,r1       /*r3= puntero a fila + coord. Columna*/
+
+     strb r2, [r3]       /*escribimos el char en la coordenada */
+
+     bx lr
+.fnend
+
+//----------------------------------------------------------
+moverasteroides:
+.fnstart
+     @CARGO EL PLANETA EN R1
+     ldr r1, =planeta
+
+     @DIBUJAR VIDAS
+     mov r4, #20         @NUMERO DE FILA
+     mov r5, #51         @CANTIDAD DE COLUMNAS
+     mul r7, r4, r5      @HAGO LA SUMA
+     add r7, #11          @LE SUMO 9 Y TENGO LA POSICION FINAL
+     add r0, r1, r7           @UBICACION DE DONDE SE VA A DIBUJAR LAS VIDAS
+     ldr r6, =vidaspantalla   @CARGO LAS VIDAS EN UN VARIABLE
+     ldrb r6, [r6]
+
+     @RECORRER LA MATRIZ Y EN CASO DE ENCONTRAR UN ASTEROIDES RESTARLE
+     @POSICIONES DE MEMORIA
+     mov r4, #' '
+     mov r5, #'*'
+     mov r7,#'$'
+cicloasteroides:
+     ldrb r3, [r1]
+
+     cmp r1, r0               @SI EL ITERADOR LLEGA A LA POSICION DIBUJO LA VIDA
+     streqb r6, [r1]
+
+     @COMPARO PARA VER SI LLEGO A LA FINAL DE LA MATRIZ
+     cmp r3, #'m'
+     beq finciclo
+
+     @SUPLANTAR POR ESPACIO Y SUBIR FILA
+     cmp r3, #'*'
+     beq ponerespacioyavanzarasteroide
+
+     cmp r3,#'$'
+     beq avanzarvida
+
+     add r1, #1
+
+     b cicloasteroides
+avanzarvida:
+     strb r4, [r1]
+     ldr r2,=planeta
+     add r2,r2,#151
+
+     cmp r1,r2
+     ble cicloasteroides
+
+     @INTENTANDO DIBUJAR EL ASTEROIDE UNA FILA MAS ARRIBA
+     sub r2, r1, #51
+
+     strb r7, [r2]
+
+     b cicloasteroides
+
+ponerespacioyavanzarasteroide:
+     @BORRAR LOS ASTEROIDES UNA VEZ LLEGAN A LA 3ER FILA (POS 204)
+
+     @REEMPLAZO EL LA COORDENA POR EL ESPACIO
+     strb r4, [r1]
+     ldr r2,=planeta
+     add r2,r2,#153
+
+     cmp r1,r2
+     ble cicloasteroides
+
+     @INTENTANDO DIBUJAR EL ASTEROIDE UNA FILA MAS ARRIBA
+     sub r2, r1, #51
+
+     strb r5, [r2]
+
+     b cicloasteroides
+dibujarvida:
+        b cicloasteroides
+
+finciclo:
+     bx lr
+.fnend
 
 //----------------------------------------------------------
 
+actualizarespacio:
+.fnstart
+     /* quiero  escribir una @ en (3,24)*/
+     ldr r3, =planeta
+
+     ldr r0, =posFila
+     ldr r0, [r0]
+
+     ldr r1, =posColumna
+     ldr r1, [r1]
+
+     mov r2,#' '
+     @CALCULAMOS EL INDICE DE LA FILA
+     mov r4, #51         /*cantidad de elementos por fila*/
+     mul r5, r4, r0      /*r5= nro de fila * cantidad de elementos*/
+/*calculamos el puntero desde el matriz[0,0]*/
+     add r3,r5           /*r3= puntero a la fila de inicio de mi matriz*/
+/*sumamos desplazamiento de la columna a la q queremos ir r1=2*/
+     add r3,r1       /*r3= puntero a fila + coord. Columna*/
+     strb r2, [r3]       /*escribimos el char en la coordenada */
+     bx lr
+.fnend
+
+//----------------------------------------------------------
 restarvida:
+.fnstart
      ldr r1, =vidas
      ldr r3, [r1]
      sub r2, r3, #1
      str r2, [r1]
 
-//----------------------------------------------------------
+     ldr r1, =vidaspantalla
+     ldrb r3, [r1]
+     sub r2, r3, #1
+     strb r2, [r1]
+     bx lr
+.fnend
 
+//----------------------------------------------------------
+sumarvida:
+.fnstart
+     ldr r1, =vidas
+     ldr r3, [r1]
+     add r2, r3, #1
+     str r2, [r1]
+
+     ldr r1, =vidaspantalla
+     ldrb r3, [r1]
+     add r2, r3, #1
+     strb r2, [r1]
+     bx lr
+.fnend
+//----------------------------------------------------------
 imprimirstring:
 .fnstart
       mov r7, #4         // Salida por pantalla
@@ -293,14 +512,14 @@ leerteclado:
 
 leernombre:
 .fnstart
-        mov r7, #3           /*syscall 3, el sistema escucha al teclado*/
-        mov r0, #0
-        mov r2, #30         /*r2 se guarda la cantidad de caracteres*/
+     mov r7, #3           /*syscall 3, el sistema escucha al teclado*/
+     mov r0, #0
+     mov r2, #30         /*r2 se guarda la cantidad de caracteres*/
      ldr r4, =nombre    /*donde se guarda la cadena ingresada*/
 
-     @ str r4, [r1]      @GUARDO EL NOMBRE EN LA VARIABLE
-        swi 0
-        bx lr
+     str r1, [r4]      @GUARDO EL NOMBRE EN LA VARIABLE
+     swi 0
+     bx lr
 .fnend
 
 //----------------------------------------------------------
@@ -315,119 +534,8 @@ limpiarpantalla:
 .fnend
 
 //----------------------------------------------------------
-
-actualizarmatriz:
-     /* quiero  escribir una @ en (3,24)*/
-     push {lr}
-     ldr r3, =planeta
-
-     add r8, #1
-
-     ldr r0, =posFila
-     ldr r0, [r0]
-
-     ldr r1, =posColumna
-     ldr r1, [r1]
-
-     mov r2,#'@'
-     @CALCULAMOS EL INDICE DE LA FILA
-     mov r4, #51         /*cantidad de elementos por fila*/
-     mul r5, r4, r0      /*r5= nro de fila * cantidad de elementos*/
-/*calculamos el puntero desde el matriz[0,0]*/
-     add r3,r5           /*r3= puntero a la fila de inicio de mi matriz*/
-/*sumamos desplazamiento de la columna a la q queremos ir r1=2*/
-     add r3,r1       /*r3= puntero a fila + coord. Columna*/
-     strb r2, [r3]       /*escribimos el char en la coordenada */
-
-     bl moverasteroides
-
-     pop {lr}
-
-     bx lr
-
-
-//----------------------------------------------------------
-moverasteroides:
-     @RECORRER LA MATRIZ Y EN CASO DE ENCONTRAR UN ASTEROIDES RESTARLE
-     @POSICIONES DE MEMORIA
-     ldr r1, =planeta
-     mov r4, #' '
-     mov r5, #'*'
-
-     add r0, r1, #9           @UBICACION DE DONDE SE VA A DIBUJAR LAS VIDAS
-     ldr r6, =vidaspantalla   @CARGO LAS VIDAS EN UN VARIABLE
-     ldrb r6, [r6]            
-cicloasteroides:
-     ldrb r3, [r1]
-
-     cmp r1, r0               @SI EL ITERADOR LLEGA A LA POSICION DIBUJO LA VIDA
-     streqb r6, [r1]
-
-     @COMPARO PARA VER SI LLEGO A LA FINAL DE LA MATRIZ
-     cmp r3, #'m'
-     beq finciclo
-
-     @SUPLANTAR POR ESPACIO Y SUBIR FILA
-     cmp r3, #'*'
-     beq ponerespacioyavanzarasteroide
-
-     @ cmp r3, #':'
-     @ beq dibujarvida
-
-     add r1, #1
-
-     b cicloasteroides
-
-ponerespacioyavanzarasteroide:
-     @BORRAR LOS ASTEROIDES UNA VEZ LLEGAN A LA 3ER FILA (POS 204)
-
-     @REEMPLAZO EL LA COORDENA POR EL ESPACIO
-     strb r4, [r1]
-     ldr r2,=planeta
-     add r2,r2,#153
-
-     cmp r1,r2
-     ble cicloasteroides
-
-     @INTENTANDO DIBUJAR EL ASTEROIDE UNA FILA MAS ARRIBA
-     sub r2, r1, #51
-
-     strb r5, [r2]
-
-     b cicloasteroides
-
-    dibujarvida:
-        b cicloasteroides
-
-finciclo:
-     bx lr
-
-//----------------------------------------------------------
-
-actualizarespacio:
-     /* quiero  escribir una @ en (3,24)*/
-     ldr r3, =planeta
-
-     ldr r0, =posFila
-     ldr r0, [r0]
-
-     ldr r1, =posColumna
-     ldr r1, [r1]
-
-     mov r2,#' '
-     @CALCULAMOS EL INDICE DE LA FILA
-     mov r4, #51         /*cantidad de elementos por fila*/
-     mul r5, r4, r0      /*r5= nro de fila * cantidad de elementos*/
-/*calculamos el puntero desde el matriz[0,0]*/
-     add r3,r5           /*r3= puntero a la fila de inicio de mi matriz*/
-/*sumamos desplazamiento de la columna a la q queremos ir r1=2*/
-     add r3,r1       /*r3= puntero a fila + coord. Columna*/
-     strb r2, [r3]       /*escribimos el char en la coordenada */
-     bx lr
-
-//----------------------------------------------------------
-
 juegocompletado:
+.fnstart
      push {lr}
      bl limpiarpantalla
 
@@ -436,11 +544,21 @@ juegocompletado:
 
      bl imprimirstring
 
-     b end
+leerj:
+@leo teclado y veo si quiere seguir jugando o salir
+     bl leerteclado
+     ldrb r1,[r1]
+     cmp r1,#'q'
+     beq end
+     cmp r1,#'y'
+     beq reiniciar
+
+     b leerj
+.fnend
 
 //----------------------------------------------------------
-
 juegoterminado:
+.fnstart
      push {lr}
      bl limpiarpantalla
 
@@ -448,11 +566,20 @@ juegoterminado:
      ldr r2, =largogameover
 
      bl imprimirstring
+leer:
+@leo teclado y veo si quiere seguir jugando o salir
+     and r1,#0
+     bl leerteclado
+     ldrb r1,[r1]
+     cmp r1,#'q'
+     beq end
+     cmp r1,#'y'
+     beq reiniciar
 
-     b end
+     b leer
+.fnend
 
 //----------------------------------------------------------
-
 crearAsteroides:
 .fnstart
     ldr r1,=planeta    @cargo la direccion de plan
@@ -487,11 +614,47 @@ ciclo:
     bx lr
 .fnend
 
+reiniciar:
+@cargo las direcciones del tablero con el que se juega y el tablero de buckup
+.fnstart
+          ldr r0,=planeta
+          ldr r1,=planeta2
+
+cicloreiniciar:
+@dibuja el tablero vacio
+               ldrb r2,[r1]
+               strb r2,[r0]
+               add r0,#1
+               add r1,#1
+
+               cmp r2,#'m'
+               beq resetearvidas
+
+               b cicloreiniciar
+resetearvidas:
+
+@resetea vidas y posicion de nave
+     mov r1,#3
+     ldr r2,=vidas
+     str r1,[r2]
+     mov r1,#'3'
+     ldr r2,=vidaspantalla
+     strb r1,[r2]
+     mov r1,#3
+     ldr r2,=posFila
+     str r1,[r2]
+     mov r1,#24
+     ldr r2,=posColumna
+     str r1,[r2]
+     ldr r1,=planeta
+
+     b main
+.fnend
+
 .global main
 main:
      mov r8, #0          @contador movmientos               (SE RESETEA EN 5)
      mov r9, #0          @ESPACIO DE CREACION DE ASTEROIDES (SE RESETEA EN 3)
-     mov r10, #3         @CANTIDAD DE VIDAS
 
      @LIMPIAR PANTALLA
      bl limpiarpantalla
@@ -519,33 +682,36 @@ main:
 @PONER CONDICIONES DE JUEGO
 
 validartecla:
-     cmp r8, #5
-     beq crearAsteroides
 
      bl leerteclado
      ldrb r1,[r1]        @EN R1 GUARDO EL CONTENIDO DE LA DIRECCION DEL TECLADO
 
      cmp r1,#'a'             @LETRA A
-     beq izquierda
-        cmp r1,#'A'
-        beq izquierda
+     bleq izquierda
+     cmp r1,#'A'
+     bleq izquierda
 
      cmp r1,#'s'             @LETRA S
-     beq abajo
-        cmp r1,#'S'
-        beq abajo
+     bleq abajo
+     cmp r1,#'S'
+     bleq abajo
 
      cmp r1,#'w'             @LETRA W
-     beq arriba
-        cmp r1,#'W'
-        beq arriba
+     bleq arriba
+     cmp r1,#'W'
+     bleq arriba
 
      cmp r1,#'d'             @LETRA D
-     beq derecha
-        cmp r1,#'D'
-        beq derecha
+     bleq derecha
+     cmp r1,#'D'
+     bleq derecha
 
 verficacion:
+     @ Verifico la colision
+     @ bl colision
+     cmp r8, #5
+     bleq crearAsteroides
+
      @VERIFIOC SI QUEDAN VIDAS
      ldr r1, =vidas
      ldr r1, [r1]
@@ -567,5 +733,5 @@ verficacion:
      b validartecla
 
 end:
-    mov r7, #1    // Salida al sistema
-    swi 0
+      mov r7, #1    // Salida al sistema
+      swi 0
